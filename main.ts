@@ -5,7 +5,7 @@
 // runs write the same bytes: nothing here depends on the clock or chance.
 //
 //   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
-import { cpSync, existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildDossier } from './vendor/makefun-game.ts';
@@ -14,7 +14,13 @@ const repoRoot = fileURLToPath(new URL('.', import.meta.url));
 const outputDir = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
 
 // Start from an empty output directory so a stale file can never leak in.
-rmSync(outputDir, { recursive: true, force: true });
+// Never remove the output directory itself: on the grader it is a mount
+// point, and removing a mount point fails with EBUSY. Empty its contents
+// instead, which keeps the directory usable and drops every stale entry.
+mkdirSync(outputDir, { recursive: true });
+for (const entry of readdirSync(outputDir)) {
+  rmSync(join(outputDir, entry), { recursive: true, force: true });
+}
 mkdirSync(join(outputDir, 'game'), { recursive: true });
 mkdirSync(join(outputDir, 'screenshots'), { recursive: true });
 
