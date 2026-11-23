@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Three Winds — a duel of Gale, Bloom &amp; Tide</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header id="topbar">
+    <div class="side foe-side">
+      <div class="avatar foe-avatar" title="Mistral">M</div>
+      <div class="who">
+        <div class="name">Mistral, the North Caller</div>
+        <div class="intent" id="intent"></div>
+      </div>
+      <div class="meters">
+        <div class="life-box"><span class="life-label">LIFE</span><span class="life" id="foe-life">30</span></div>
+        <div class="mana-box"><span class="mana-label">MANA</span><span class="mana" id="foe-mana"></span></div>
+        <div class="deck-box">Deck <span id="foe-deck">21</span></div>
+      </div>
+    </div>
+    <div class="round-box"><span id="round">Round 1</span></div>
+  </header>
+
+  <div id="foe-hand" aria-label="Mistral's hand"></div>
+
+  <main id="lanes" aria-label="Battle lanes"></main>
+
+  <footer id="bottombar">
+    <div class="side you-side">
+      <div class="avatar you-avatar" title="You">Y</div>
+      <div class="who">
+        <div class="name">You, the South Caller</div>
+        <div class="hint">Click a card, then a lane · Click a spell twice to cast it</div>
+      </div>
+      <div class="meters">
+        <div class="life-box"><span class="life-label">LIFE</span><span class="life" id="you-life">30</span></div>
+        <div class="mana-box"><span class="mana-label">MANA</span><span class="mana" id="you-mana"></span></div>
+        <div class="deck-box">Deck <span id="you-deck">21</span></div>
+      </div>
+    </div>
+    <div id="hand" aria-label="Your hand"></div>
+    <div class="controls">
+      <button id="end-turn" type="button">End Turn ⏎</button>
+      <button id="mute-btn" type="button">🔊 Sound on</button>
+    </div>
+  </footer>
+
+  <div id="banner" role="status"></div>
+  <div id="log" aria-label="Duel log"></div>
+  <div id="fx" aria-hidden="true"></div>
+
+  <section id="screen-title" class="screen">
+    <div class="panel title-panel">
+      <div class="kicker">A DUEL OF WIND-CALLERS</div>
+      <h1>THREE<br>WINDS</h1>
+      <p class="tagline">Gale scatters Bloom. Bloom drinks Tide. Tide grounds Gale.<br>Call your wardens, ride the Surge, and take Mistral's life to zero.</p>
+      <div class="cycle" aria-label="Wind cycle">
+        <span class="cycle-wind wind-gale">🌀 Gale</span><span class="cycle-arrow">➜</span>
+        <span class="cycle-wind wind-bloom">🍃 Bloom</span><span class="cycle-arrow">➜</span>
+        <span class="cycle-wind wind-tide">🌊 Tide</span><span class="cycle-arrow">➜</span>
+        <span class="cycle-wind wind-gale">🌀 Gale</span>
+      </div>
+      <button id="play-btn" type="button" class="big-btn">▶ &nbsp;Play the Duel</button>
+      <button id="how-btn" type="button" class="link-btn">How to play</button>
+      <div id="howto" class="hidden">
+        <p><b>Each turn</b> you gain mana (1 more than last turn, up to 7) and draw a card. Play wardens into the three lanes, then end your turn: paired wardens trade blows, and a warden facing an empty lane strikes Mistral's life.</p>
+        <p><b>Wind advantage:</b> a warden fighting the wind it beats strikes with +2 power. <b>Surge:</b> play two cards of one wind in a turn and all your wardens of that wind gain +1 power.</p>
+        <p><b>Spells:</b> Gust wounds any warden, Rainfall mends yours (or heals you), Deep Draw draws two, Windfall grants mana, Cyclone storms every enemy warden.</p>
+        <p><b>Win</b> by taking Mistral's life to zero. Drawing from an empty deck costs 2 life. The caller who moves second opens with a Tailwind — one free mana — to balance the first move.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="screen-over" class="screen hidden">
+    <div class="panel over-panel">
+      <h1 id="over-title">VICTORY</h1>
+      <p id="over-text"></p>
+      <p id="over-stats"></p>
+      <button id="again-btn" type="button" class="big-btn">↻ &nbsp;Play Again</button>
+    </div>
+  </section>
+
+  <section id="screen-paused" class="screen hidden">
+    <div class="panel pause-panel">
+      <h1>Paused</h1>
+      <p>The winds wait for you.</p>
+      <button id="resume-btn" type="button" class="big-btn">Resume</button>
+      <button id="restart-btn" type="button" class="link-btn">Restart the duel</button>
+    </div>
+  </section>
+
+  <div id="status" class="sr-only" aria-live="polite"></div>
+</div>
+<script type="module" src="src/main.js"></script>
+</body>
+</html>
